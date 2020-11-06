@@ -4,7 +4,7 @@ provider "aws" {
 	secret_key = ""
 }
 
-resource "aws_instance" "web_server" {
+resource "aws_instance" "cloud_server" {
 	ami = "ami-0817d428a6fb68645"
 	instance_type = "t2.micro"
 	tags = {
