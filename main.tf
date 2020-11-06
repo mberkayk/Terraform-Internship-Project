@@ -1,7 +1,10 @@
+variable "access-key" {}
+variable "secret-key"{}
+
 provider "aws" {
 	region = "us-east-1"
-	access_key = ""
-	secret_key = ""
+	access_key = var.access-key
+	secret_key = var.secret-key
 }
 
 resource "aws_instance" "cloud_server" {
