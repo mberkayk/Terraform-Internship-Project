@@ -19,10 +19,12 @@ provider "aws" {
 }
 
 terraform {
-	backend "s3" {
-		bucket = "mberkayk.tf-state-bucket"
-		key    = "terraform.tfstate"
-		region = "us-east-1"
+  backend "remote" {
+    organization = "mberkayk-tf-org"
+
+    workspaces {
+      name = "tf-cloud-workspace"
+    }
   }
 }
 
