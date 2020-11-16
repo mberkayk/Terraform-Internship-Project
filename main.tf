@@ -1,3 +1,10 @@
+variable "root-access-key" {}
+variable "root-secret-key" {}
+variable "ec2-access-key" {}
+variable "ec2-secret-key" {}
+variable "s3-access-key" {}
+variable "s3-secret-key" {}
+
 provider "aws" {
 	region = "us-east-1"
 	access_key = var.root-access-key
