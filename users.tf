@@ -1,9 +1,3 @@
-provider "aws" {
-	region = "us-east-1"
-	access_key = var.access-key
-	secret_key = var.secret-key
-}
-
 resource "aws_iam_group" "s3-group" {
     name = "s3_group"
 }
