@@ -27,8 +27,6 @@ terraform {
 }
 
 
-/*
-
 resource "aws_instance" "cloud_server" {
 	provider = aws.ec2
 	ami = "ami-0817d428a6fb68645"
@@ -37,7 +35,7 @@ resource "aws_instance" "cloud_server" {
 		Name = "Terraform Cloud Instance"
 	}
 }
-*/
+
 
 resource "aws_s3_bucket" "mybucket" {
 	provider = aws.s3
