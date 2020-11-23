@@ -2,30 +2,10 @@ variable "name" {default="dynamic-vault-admin"}
 
 provider "vault" {}
 
-provider "aws" {
-	region = "us-east-1"
-	access_key = var.root-access-key
-	secret_key = var.root-secret-key
-}
-
-provider "aws" {
-	alias = "ec2"
-	region = "us-east-1"
-	access_key = var.ec2-access-key
-	secret_key = var.ec2-secret-key
-}
-
-provider "aws" {
-	alias = "s3"
-	region = "us-east-1"
-	access_key = var.s3-access-key
-	secret_key = var.s3-secret-key
-}
-
 resource "vault_aws_secret_backend" "aws"{
 	access_key = var.root-access-key
 	secret_key = var.root-secret-key
-	name = ""${var.name}-path"
+	name = "${var.name}-path"
 
   default_lease_ttl_seconds = "120"
   max_lease_ttl_seconds     = "240"
@@ -46,6 +26,32 @@ resource "vault_aws_secret_backend_role" "s3-role" {
 
   policy_arns = ["arn:aws:iam::427790202393:policy/S3-Policy"]
 }
+
+data "vault_aws_access_credentials" "ec2-creds" {
+  backend = vault_aws_secret_backend.aws.path
+  role    = vault_aws_secret_backend_role.ec2-role.name
+}
+
+provider "aws" {
+	region = "us-east-1"
+	access_key = var.root-access-key
+	secret_key = var.root-secret-key
+}
+
+provider "aws" {
+	alias = "ec2"
+	region = "us-east-1"
+	access_key = data.vault_aws_access_credentials.ec2-creds.access_key
+	secret_key = data.vault_aws_access_credentials.ec2-creds.secret_key
+}
+
+provider "aws" {
+	alias = "s3"
+	region = "us-east-1"
+	access_key = var.s3-access-key
+	secret_key = var.s3-secret-key
+}
+
 
 terraform {
 	backend "s3" {
