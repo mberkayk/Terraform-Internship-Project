@@ -10,3 +10,32 @@ Error: no role found at path "aws/creds/dynamic-vault-s3-role"
   on main.tf line 34, in data "vault_aws_access_credentials" "s3-creds":
   34: data "vault_aws_access_credentials" "s3-creds" {
 
+
+
+
+Error: error reading from Vault: Error making API request.
+
+URL: GET http://127.0.0.1:8200/v1/aws/creds/dynamic-vault-ec2-role?role_arn=
+Code: 400. Errors:
+
+* Role 'dynamic-vault-ec2-role' not found
+
+  on main.tf line 29, in data "vault_aws_access_credentials" "ec2-creds":
+  29: data "vault_aws_access_credentials" "ec2-creds" {
+
+
+
+Error: error reading from Vault: Error making API request.
+
+URL: GET http://127.0.0.1:8200/v1/aws/creds/dynamic-vault-s3-role?role_arn=
+Code: 400. Errors:
+
+* Role 'dynamic-vault-s3-role' not found
+
+  on main.tf line 34, in data "vault_aws_access_credentials" "s3-creds":
+  34: data "vault_aws_access_credentials" "s3-creds" {
+
+
+
+
+vault secrets enable aws
