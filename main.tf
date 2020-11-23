@@ -1,3 +1,4 @@
+/*
 provider "vault" {}
 
 resource "vault_aws_secret_backend" "aws"{
@@ -36,7 +37,7 @@ data "vault_aws_access_credentials" "s3-creds" {
   backend = vault_aws_secret_backend.aws.path
   role    = vault_aws_secret_backend_role.s3-role.name
 }
-
+*/
 
 provider "aws" {
 	region = "us-east-1"
@@ -47,15 +48,25 @@ provider "aws" {
 provider "aws" {
 	alias = "ec2"
 	region = "us-east-1"
-	access_key = data.vault_aws_access_credentials.ec2-creds.access_key
-	secret_key = data.vault_aws_access_credentials.ec2-creds.secret_key
+
+	#access_key = data.vault_aws_access_credentials.ec2-creds.access_key
+	#secret_key = data.vault_aws_access_credentials.ec2-creds.secret_key
+
+	access_key = var.ec2-access-key
+	secret_key = var.ec2-secret-key
+
 }
 
 provider "aws" {
 	alias = "s3"
 	region = "us-east-1"
-	access_key = data.vault_aws_access_credentials.s3-creds.access_key
-	secret_key = data.vault_aws_access_credentials.s3-creds.secret_key
+
+	#access_key = data.vault_aws_access_credentials.s3-creds.access_key
+	#secret_key = data.vault_aws_access_credentials.s3-creds.secret_key
+
+	access_key = var.s3-access-key
+	secret_key = var.s3-secret-key
+
 }
 
 
@@ -67,7 +78,7 @@ terraform {
   }
 }
 
-
+/*
 resource "aws_instance" "cloud_server" {
 	provider = aws.ec2
 	ami = "ami-0817d428a6fb68645"
@@ -76,7 +87,7 @@ resource "aws_instance" "cloud_server" {
 		Name = "Terraform Cloud Instance"
 	}
 }
-
+*/
 
 resource "aws_s3_bucket" "mybucket" {
 	provider = aws.s3
