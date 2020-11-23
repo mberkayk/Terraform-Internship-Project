@@ -1,0 +1,12 @@
+Error: no role found at path "aws/creds/dynamic-vault-ec2-role"
+
+  on main.tf line 29, in data "vault_aws_access_credentials" "ec2-creds":
+  29: data "vault_aws_access_credentials" "ec2-creds" {
+
+
+
+Error: no role found at path "aws/creds/dynamic-vault-s3-role"
+
+  on main.tf line 34, in data "vault_aws_access_credentials" "s3-creds":
+  34: data "vault_aws_access_credentials" "s3-creds" {
+
