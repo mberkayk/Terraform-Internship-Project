@@ -1,6 +1,6 @@
 
 
-/*
+
 provider "vault" {}
 
 resource "vault_aws_secret_backend" "aws"{
@@ -29,7 +29,6 @@ resource "vault_aws_secret_backend_role" "s3-role" {
   policy_arns = ["arn:aws:iam::427790202393:policy/S3-Policy"]
 }
 
-
 data "vault_aws_access_credentials" "ec2-creds" {
   backend = vault_aws_secret_backend.aws.path
   role    = vault_aws_secret_backend_role.ec2-role.name
@@ -39,7 +38,6 @@ data "vault_aws_access_credentials" "s3-creds" {
   backend = vault_aws_secret_backend.aws.path
   role    = vault_aws_secret_backend_role.s3-role.name
 }
-*/
 
 provider "aws" {
 	region = "us-east-1"
@@ -51,11 +49,11 @@ provider "aws" {
 	alias = "ec2"
 	region = "us-east-1"
 
-	#access_key = data.vault_aws_access_credentials.ec2-creds.access_key
-	#secret_key = data.vault_aws_access_credentials.ec2-creds.secret_key
+	access_key = data.vault_aws_access_credentials.ec2-creds.access_key
+	secret_key = data.vault_aws_access_credentials.ec2-creds.secret_key
 
-	access_key = var.ec2-access-key
-	secret_key = var.ec2-secret-key
+	# access_key = var.ec2-access-key
+	# secret_key = var.ec2-secret-key
 
 }
 
@@ -63,11 +61,11 @@ provider "aws" {
 	alias = "s3"
 	region = "us-east-1"
 
-	#access_key = data.vault_aws_access_credentials.s3-creds.access_key
-	#secret_key = data.vault_aws_access_credentials.s3-creds.secret_key
+	access_key = data.vault_aws_access_credentials.s3-creds.access_key
+	secret_key = data.vault_aws_access_credentials.s3-creds.secret_key
 
-	access_key = var.s3-access-key
-	secret_key = var.s3-secret-key
+	# access_key = var.s3-access-key
+	# secret_key = var.s3-secret-key
 
 }
 
@@ -96,3 +94,7 @@ resource "aws_s3_bucket" "mybucket" {
 	bucket = "mberkayk.created-with-tf"
 }
 
+resource "aws_kms_key" "vault" {
+  description             = "Vault unseal key"
+  deletion_window_in_days = 10
+}
